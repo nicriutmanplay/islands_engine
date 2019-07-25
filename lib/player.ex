@@ -39,6 +39,14 @@ defmodule IslandsEngine.Player do
     coordinate
   end
 
+  def guess_coordinate(opponent_board, coordinate) do
+    Board.guess_coordinate(opponent_board, coordinate)
+    case Board.coordinate_hit?(opponent_board, coordinate) do
+      true -> :hit
+      false -> :miss
+    end
+  end
+
   def to_string(player) do
     "%Player{" <> string_body(player) <> "}"
   end
