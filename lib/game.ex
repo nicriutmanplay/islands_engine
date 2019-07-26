@@ -6,7 +6,7 @@ defmodule IslandsEngine.Game do
   defstruct player1: :none, player2: :none
 
   def start_link(name) when not is_nil name do
-    GenServer.start_link(__MODULE__, name)
+    GenServer.start_link(__MODULE__, name, name: {:global, "game:#{name}"})
   end
 
   def init(name) do
@@ -39,6 +39,18 @@ defmodule IslandsEngine.Game do
     |> win_check(opponent, state)
   end
 
+  def handle_cast(:stop, state) do
+    {:stop, :normal, state}
+  end
+
+  def stop(pid) do
+    GenServer.cast(pid, :stop)
+  end
+
+  def call_demo(game) do
+    GenServer.call(game, :demo)
+  end
+
   defp opponent(state, :player1) do
     state.player2
   end
@@ -67,10 +79,6 @@ defmodule IslandsEngine.Game do
       false -> :no_win
     end
     {:reply, {:hit, island_key, win_status}, state}
-  end
-
-  def call_demo(game) do
-    GenServer.call(game, :demo)
   end
 
   def add_player(pid, name) when name != nil do
