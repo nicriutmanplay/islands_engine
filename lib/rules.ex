@@ -75,7 +75,7 @@ defmodule IslandsEngine.Rules do
   end
 
   def players_set({:call, from}, _, state_data) do
-    {:keep_state_and_data, {:reply, from, {:error, :action_out_of_sequence}}}
+    {:keep_state_and_data, {:reply, from, :error}}
   end
 
   def player1_turn({:call, from}, :show_current_state, _state_data) do
@@ -91,7 +91,7 @@ defmodule IslandsEngine.Rules do
   end
 
   def player1_turn({:call, from}, _, _state_data) do
-    {:keep_state_and_data, {:reply, from, {:error, :action_out_of_sequence}}}
+    {:keep_state_and_data, {:reply, from, :error}}
   end
 
   def player2_turn({:call,from}, :show_current_state, _state_data) do
@@ -107,7 +107,7 @@ defmodule IslandsEngine.Rules do
   end
 
   def player2_turn({:call, from}, _caller_pid, _) do
-    {:keep_state_and_data, {:reply, from, {:error, :action_out_of_sequence}}}
+    {:keep_state_and_data, {:reply, from, :error}}
   end
 
   def game_over({:call, from}, :show_current_state, _state_data) do

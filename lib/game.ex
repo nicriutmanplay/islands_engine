@@ -71,8 +71,8 @@ defmodule IslandsEngine.Game do
     Player.guess_coordinate(opponent_board, coordinate)
   end
 
-  defp guess_reply({:error, :action_out_of_sequence}, _opponent_board, _coordinate) do
-    {:error, :action_out_of_sequence}
+  defp guess_reply(:error, _opponent_board, _coordinate) do
+    :error
   end
 
   def stop(pid) do
@@ -100,8 +100,8 @@ defmodule IslandsEngine.Game do
     {:hit, island_key}
   end
 
-  defp forest_check({:error, :action_out_of_sequence}, _opponent_board, _coordinate) do
-    {:error, :action_out_of_sequence}
+  defp forest_check(:error, _opponent_board, _coordinate) do
+    :error
   end
 
   defp win_check({hit_or_miss, :none}, _opponent, state) do
@@ -120,8 +120,8 @@ defmodule IslandsEngine.Game do
     {:reply, {:hit, island_key, win_status}, state}
   end
 
-  defp win_check({:error, :action_out_of_sequence}, _opponent, state) do
-    {:reply, {:error, :action_out_of_sequence}, state}
+  defp win_check(:error, _opponent, state) do
+    {:reply, :error, state}
   end
 
   def add_player(pid, name) when name != nil do
